@@ -256,20 +256,21 @@ def votes_added(request):
 def answer_votes_added(request):
 	up_vote = request.POST.get('up_vote')
 	down_vote = request.POST.get('down_vote')
-	
+
 	user_id = jwt_decode(payload=request.POST.get('token'))
 	user_id = NewUser.objects.filter(id=user_id.get('user_id')).all()
 	for ids in user_id:
 		user_id = ids
 	
-	ans_id = Question.objects.filter(id=request.POST.get('ans_id')).all()
+	ans_id = Answer.objects.filter(id=request.POST.get('ans_id')).all()
 	for ids in ans_id:
 		ans_id = ids
 
 	vote_check = TrendingAnswer.objects.filter(user_id=user_id, ans_id=ans_id).all()
+
 	if not vote_check:
 		try:
-			create_vote = TrendingQuestion(up_vote=True, down_vote=False, user_id=user_id, ans_id=ans_id)
+			create_vote = TrendingAnswer(up_vote=True, down_vote=False, user_id=user_id, ans_id=ans_id)
 			create_vote.save()
 			response = {}
 			response['status_code'] = 200
@@ -282,7 +283,7 @@ def answer_votes_added(request):
 		for vote in vote_check:
 			if vote.up_vote != up_vote and vote.down_vote != down_vote and up_vote != down_vote:
 				try:
-					create_view = TrendingQuestion.objects.filter(user_id=user_id, ans_id=ans_id).update(up_vote=up_vote, down_vote=down_vote)
+					create_view = TrendingAnswer.objects.filter(user_id=user_id, ans_id=ans_id).update(up_vote=up_vote, down_vote=down_vote)
 					response = {}
 					response['status_code'] = 200
 					response['status_message'] =  "Vote Added"

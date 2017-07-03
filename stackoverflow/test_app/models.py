@@ -31,7 +31,7 @@ class TrendingQuestion(models.Model):
 	created_on = models.DateTimeField(auto_now_add=True)
 
 class TrendingAnswer(models.Model):
-	ans_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+	ans_id = models.ForeignKey(Answer, on_delete=models.CASCADE)
 	user_id = models.ForeignKey(NewUser, on_delete=models.CASCADE)
 	up_vote = models.BooleanField(default=False)
 	down_vote = models.BooleanField(default=False)
