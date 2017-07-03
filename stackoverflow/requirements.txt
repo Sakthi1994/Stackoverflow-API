@@ -1,2 +1,5 @@
 Python==2.7.6
 Django==1.11.2
+hashlib==20081119
+PyJWT==1.5.2
+psycopg2==2.7.1
